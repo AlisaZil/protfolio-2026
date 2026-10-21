@@ -14,7 +14,7 @@ import { SlideIn } from '../../shared/slide-in';
 import { LanguageService } from '../../language/language.service';
 import { PROFILE, SOCIAL_LINKS } from '../../profile';
 import { SocialClicks } from '../../social-clicks';
-import { ContactService, SendResult } from './contact.service';
+import { ContactService } from './contact.service';
 
 type Field = 'name' | 'email' | 'message';
 
@@ -62,8 +62,8 @@ export class Contact {
   /** True after a submit attempt, so all errors show even on untouched fields. */
   private readonly submitAttempted = signal(false);
   protected readonly sending = signal(false);
-  /** After sending: who sent it and how it went out, for the thank-you note. */
-  protected readonly sent = signal<{ name: string; result: SendResult } | null>(null);
+  /** Name of the person who just sent a message, for the thank-you note. */
+  protected readonly sentBy = signal<string | null>(null);
   protected readonly sendFailed = signal(false);
 
   /** Error message for a field, once the user has visited it or tried to submit. */
@@ -79,7 +79,7 @@ export class Contact {
   protected async submit(): Promise<void> {
     if (this.sending()) return;
     this.submitAttempted.set(true);
-    this.sent.set(null);
+    this.sentBy.set(null);
     this.sendFailed.set(false);
 
     if (this.form.invalid) {
@@ -95,8 +95,8 @@ export class Contact {
     const message = this.form.getRawValue();
     this.sending.set(true);
     try {
-      const result = await this.contactService.send(message);
-      this.sent.set({ name: message.name, result });
+      await this.contactService.send(message);
+      this.sentBy.set(message.name);
       this.form.reset();
       this.submitAttempted.set(false);
     } catch {

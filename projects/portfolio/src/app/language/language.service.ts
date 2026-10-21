@@ -21,7 +21,7 @@ export interface Language {
 }
 
 export const LANGUAGES: Language[] = [
-  { code: 'en', name: 'English', dir: 'ltr', flag: 'flags/us.svg' },
+  { code: 'en', name: 'English', dir: 'ltr', flag: 'images/flag-en.svg' },
   { code: 'he', name: 'עברית', dir: 'rtl', flag: 'flags/il.svg' },
 ];
 

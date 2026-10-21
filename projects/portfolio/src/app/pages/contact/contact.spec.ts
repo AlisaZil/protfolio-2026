@@ -6,7 +6,7 @@ import { SocialClicks } from '../../social-clicks';
 import { ContactService } from './contact.service';
 
 async function setup() {
-  const send = vi.fn().mockResolvedValue('sent');
+  const send = vi.fn().mockResolvedValue(undefined);
   TestBed.configureTestingModule({
     providers: [{ provide: ContactService, useValue: { send } }, provideTestTranslations()],
   });

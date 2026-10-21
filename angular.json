@@ -56,7 +56,7 @@
                 "input": "projects/portfolio/public"
               },
               {
-                "glob": "{us,il}.svg",
+                "glob": "il.svg",
                 "input": "node_modules/flag-icons/flags/4x3",
                 "output": "flags"
               }

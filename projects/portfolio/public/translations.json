@@ -102,7 +102,6 @@
       "messagePlaceholder": { "en": "Tell me about your project…", "he": "ספרו לי על הפרויקט שלכם…" },
       "submit": { "en": "Send message", "he": "שליחת הודעה" },
       "thanks": { "en": "Thanks, {{name}}! Your message is on its way. I’ll get back to you soon.", "he": "תודה, {{name}}! ההודעה נשלחה ואחזור אליכם בהקדם." },
-      "thanksEmailApp": { "en": "Thanks, {{name}}! Your email app should open with your message ready to send.", "he": "תודה, {{name}}! אפליקציית המייל אמורה להיפתח עם ההודעה מוכנה לשליחה." },
       "error": { "en": "Sorry, the message didn’t go through. Please try again, or email me at {{email}}.", "he": "מצטערת, ההודעה לא נשלחה. נסו שוב, או כתבו לי ישירות ל-{{email}}." }
     },
     "errors": {

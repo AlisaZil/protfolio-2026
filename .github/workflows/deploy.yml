@@ -1,0 +1,58 @@
+# Builds the portfolio and publishes it to GitHub Pages on every push to main.
+# Live at https://alisazil.github.io/protfolio-2026/
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # also allows running it by hand from the Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        # The site lives in a sub-folder named after the repo
+        run: npx ng build portfolio --base-href "/${{ github.event.repository.name }}/"
+
+      # GitHub Pages has no server-side routing: serve the app for unknown paths
+      # (e.g. refreshing /about) so Angular can show the right page.
+      - name: Add 404 fallback
+        run: cp dist/portfolio/browser/index.html dist/portfolio/browser/404.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/portfolio/browser
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

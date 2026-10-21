@@ -77,18 +77,15 @@
 
       <ui-button class="submit" [config]="submitButton()" />
 
-      @if (sent(); as done) {
+      @if (sentBy(); as name) {
         <ui-alert
           [config]="{
             kind: 'inline',
             tone: 'success',
-            message: language.t(
-              done.result === 'sent' ? 'contact.form.thanks' : 'contact.form.thanksEmailApp',
-              { name: done.name }
-            ),
+            message: language.t('contact.form.thanks', { name }),
             dismissible: true,
           }"
-          (dismissed)="sent.set(null)"
+          (dismissed)="sentBy.set(null)"
         />
       }
       @if (sendFailed()) {
