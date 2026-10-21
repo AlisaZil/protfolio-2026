@@ -1,0 +1,54 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: block;
+}
+
+.cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: t.space(3);
+  padding: t.space(4);
+  background: linear-gradient(120deg, t.color(blush) 0%, #fff4f9 100%);
+  border-radius: t.radius(lg);
+}
+
+.eyebrow {
+  margin: 0 0 t.space(1);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: t.color(primary);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: t.color(ink);
+}
+
+.text {
+  max-width: 32rem;
+  margin: t.space(1) 0 0;
+  font-size: 1.0625rem;
+  color: t.color(muted);
+}
+
+.link {
+  font-size: 1.0625rem;
+}
+
+.cta--compact {
+  padding: t.space(3) t.space(4);
+
+  .title {
+    font-size: clamp(1.375rem, 2.5vw, 1.75rem);
+    font-weight: 700;
+  }
+}

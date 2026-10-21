@@ -1,0 +1,48 @@
+@let c = config();
+
+<footer class="footer" [class.footer--plain]="c.variant === 'plain'">
+  <p class="copyright">{{ c.copyright }}</p>
+
+  @if (c.links?.length) {
+    <nav aria-label="Footer">
+      <ul class="links">
+        @for (item of c.links; track item.id) {
+          <li>
+            @if (item.routerLink) {
+              <a class="link" [routerLink]="item.routerLink" (click)="linkClicked.emit({ link: item, event: $event })">{{
+                item.label
+              }}</a>
+            } @else {
+              <a class="link" [href]="item.href || null" (click)="linkClicked.emit({ link: item, event: $event })">{{
+                item.label
+              }}</a>
+            }
+          </li>
+        }
+      </ul>
+    </nav>
+  }
+
+  @if (c.status; as status) {
+    <p class="status separated" [class.is-available]="status.available">{{ status.label }}</p>
+  }
+
+  @if (c.socials?.length) {
+    <ul class="socials separated">
+      @for (social of c.socials; track social.id) {
+        <li>
+          <a
+            class="social"
+            [href]="social.href"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="social.label"
+            (click)="linkClicked.emit({ link: social, event: $event })"
+          >
+            <ui-icon [config]="{ name: social.icon, size: 18 }" />
+          </a>
+        </li>
+      }
+    </ul>
+  }
+</footer>

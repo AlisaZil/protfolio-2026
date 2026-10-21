@@ -1,0 +1,142 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: block;
+}
+
+.alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-block: 12px;
+  padding-inline: t.space(2) 12px;
+  color: t.color(ink);
+  border: 1px solid transparent;
+  border-radius: t.radius(md);
+}
+
+.icon {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  color: #fff;
+  border-radius: 50%;
+}
+
+.body {
+  flex: 1;
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.text {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: t.color(muted);
+}
+
+.title + .text {
+  margin-top: 2px;
+}
+
+.action {
+  margin-top: 6px;
+  padding: 0;
+  font: inherit;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: t.color(primary);
+  background: none;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+    border-radius: 4px;
+  }
+}
+
+.close {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  color: t.color(muted);
+  background: none;
+  border: 0;
+  border-radius: t.radius(sm);
+  cursor: pointer;
+
+  &:hover {
+    color: t.color(ink);
+    background: rgb(16 28 53 / 0.06);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+}
+
+// Tones
+.alert--success {
+  background: t.color(success-soft);
+  border-color: t.color(success-border);
+
+  .icon {
+    background: t.color(success);
+  }
+}
+
+.alert--info {
+  background: t.color(info-soft);
+  border-color: t.color(info-border);
+
+  .icon {
+    background: t.color(info);
+  }
+}
+
+.alert--error {
+  background: t.color(error-soft);
+  border-color: t.color(error-border);
+
+  .icon {
+    background: t.color(error);
+  }
+}
+
+// Kinds
+.alert--inline {
+  align-items: center;
+  padding: 12px t.space(2);
+  border-color: transparent;
+  border-radius: t.radius(sm);
+
+  .body {
+    padding-top: 0;
+  }
+
+  .text {
+    font-size: 0.875rem;
+    color: t.color(ink);
+  }
+}
+
+.alert--toast {
+  width: min(360px, calc(100vw - 32px));
+  box-shadow: t.shadow(md);
+}

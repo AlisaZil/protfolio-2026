@@ -1,0 +1,60 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: inline-flex;
+}
+
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.9375rem;
+  color: t.color(ink);
+  cursor: pointer;
+
+  &.is-disabled {
+    color: t.color(disabled);
+    cursor: not-allowed;
+  }
+}
+
+.box {
+  appearance: none;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  background: t.color(surface) no-repeat center / 14px;
+  border: 1.5px solid t.color(border-strong);
+  border-radius: 6px;
+  cursor: inherit;
+  transition:
+    background-color t.$transition,
+    border-color t.$transition;
+
+  &:hover:not(:disabled) {
+    border-color: t.color(primary);
+  }
+
+  &:checked,
+  &:indeterminate {
+    background-color: t.color(primary);
+    border-color: t.color(primary);
+  }
+
+  &:checked {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E");
+  }
+
+  &:indeterminate {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M4 8h8'/%3E%3C/svg%3E");
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+}

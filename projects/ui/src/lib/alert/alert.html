@@ -1,0 +1,29 @@
+@if (visible()) {
+  @let c = cfg();
+  <div
+    class="alert alert--{{ c.kind }} alert--{{ c.tone }}"
+    [attr.role]="c.tone === 'error' ? 'alert' : 'status'"
+  >
+    <span class="icon">
+      <ui-icon [config]="icon()" />
+    </span>
+
+    <div class="body">
+      @if (c.title) {
+        <p class="title">{{ c.title }}</p>
+      }
+      <p class="text">{{ c.message }}</p>
+      @if (c.action) {
+        <button type="button" class="action" (click)="actionClicked.emit($event)">
+          {{ c.action.label }}
+        </button>
+      }
+    </div>
+
+    @if (c.dismissible) {
+      <button type="button" class="close" aria-label="Dismiss" (click)="dismiss()">
+        <ui-icon [config]="{ name: 'close', size: 14 }" />
+      </button>
+    }
+  </div>
+}

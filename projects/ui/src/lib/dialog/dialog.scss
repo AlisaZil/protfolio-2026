@@ -1,0 +1,297 @@
+@use '../../styles/tokens' as t;
+
+.dialog {
+  width: min(420px, calc(100vw - 32px));
+  padding: 0;
+  color: t.color(ink);
+  background: t.color(surface);
+  border: 1px solid t.color(border);
+  border-radius: t.radius(lg);
+  box-shadow: t.shadow(lg);
+
+  &::backdrop {
+    background: rgb(16 28 53 / 0.35);
+    backdrop-filter: blur(4px);
+  }
+
+  // Opening: the panel pops in, the backdrop fades in
+  &[open] {
+    animation: dialog-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+    &::backdrop {
+      animation: backdrop-in 220ms ease-out;
+    }
+  }
+}
+
+.dialog--large {
+  width: min(560px, calc(100vw - 32px));
+
+  .panel {
+    padding: t.space(4);
+  }
+
+  .title {
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .text {
+    font-size: 1.0625rem;
+    line-height: 1.65;
+  }
+}
+
+.panel {
+  padding: t.space(3);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: t.space(2);
+}
+
+.title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+
+  &--below {
+    margin-top: t.space(3);
+  }
+}
+
+// Intro animation: blinking caret while the title types out ------------------------
+.caret {
+  display: inline-block;
+  width: 3px;
+  height: 0.9em;
+  margin-inline-start: 3px;
+  vertical-align: -0.08em;
+  background: t.color(primary);
+  border-radius: 2px;
+  animation: caret-blink 0.9s steps(1) infinite;
+}
+
+// Message and buttons wait (hidden, not clickable) until the title is typed,
+// then slide up into view one after the other.
+.panel.is-intro {
+  .text,
+  .actions {
+    animation: content-reveal 420ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  .actions {
+    animation-delay: 140ms;
+  }
+}
+
+.panel.is-waiting {
+  .text,
+  .actions {
+    visibility: hidden;
+    animation: none;
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+// Icon above the title, resting on the left. Each time the dialog opens it falls in on
+// the right (by the close button) and bounces leftward, lower each hop, until it lands.
+// .badge moves sideways; .badge-bounce does the up-and-down with a squash on each landing.
+.header--icon {
+  container-type: inline-size; // lets the travel distance match the panel's width
+  align-items: center;
+}
+
+.badge {
+  // From the icon's spot on the left to just before the close button:
+  // header width − icon (32px) − gap (16px) − close button (32px), minus the close button's −8px margin
+  --hop-distance: calc(100cqi - 72px);
+  display: inline-flex;
+  color: t.color(muted);
+
+  &:dir(rtl) {
+    --hop-distance: calc(-100cqi + 72px);
+  }
+}
+
+.badge-bounce {
+  display: inline-flex;
+  transform-origin: bottom center;
+}
+
+.dialog[open] {
+  .badge {
+    animation: badge-travel 1.7s cubic-bezier(0.3, 0.55, 0.35, 1) 150ms both;
+  }
+
+  .badge-bounce {
+    animation: badge-bounce 1.7s linear 150ms both;
+  }
+}
+
+.close {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin-block-start: -4px;
+  margin-inline-end: -8px;
+  padding: 0;
+  color: t.color(muted);
+  background: none;
+  border: 0;
+  border-radius: t.radius(sm);
+  cursor: pointer;
+
+  &:hover {
+    color: t.color(ink);
+    background: t.color(neutral);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+}
+
+.text {
+  margin: t.space(1) 0 0;
+  font-size: 0.875rem;
+  line-height: 1.55;
+  white-space: pre-line; // keep line breaks from the message
+  color: t.color(muted);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: t.space(3);
+}
+
+// Two equal buttons filling the row (stacked on narrow screens)
+.actions--fill {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: t.space(2);
+}
+
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+  }
+}
+
+@keyframes backdrop-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes content-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+// Sideways: from the right to its spot on the left, with a little roll
+@keyframes badge-travel {
+  0% {
+    opacity: 0;
+    transform: translateX(var(--hop-distance)) rotate(25deg);
+  }
+  6% {
+    opacity: 1;
+  }
+  92%,
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
+// Up and down: fall in through the top edge, then three hops, each lower (kept inside
+// the panel's top padding so they aren't clipped); squash on every landing
+@keyframes badge-bounce {
+  // falling: speeds up; rising: slows down
+  0% {
+    transform: translateY(-110px) scale(1, 1);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  24% {
+    transform: translateY(0) scale(1.18, 0.82);
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  27% {
+    transform: translateY(-4px) scale(1, 1);
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  40% {
+    transform: translateY(-26px) scale(1, 1);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  54% {
+    transform: translateY(0) scale(1.12, 0.88);
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  57% {
+    transform: translateY(-2px) scale(1, 1);
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  66% {
+    transform: translateY(-13px) scale(1, 1);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  76% {
+    transform: translateY(0) scale(1.08, 0.92);
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  79% {
+    transform: translateY(-1px) scale(1, 1);
+    animation-timing-function: cubic-bezier(0, 0.55, 0.45, 1);
+  }
+  85% {
+    transform: translateY(-5px) scale(1, 1);
+    animation-timing-function: cubic-bezier(0.55, 0, 1, 0.45);
+  }
+  92% {
+    transform: translateY(0) scale(1.04, 0.96);
+  }
+  100% {
+    transform: translateY(0) scale(1, 1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dialog[open],
+  .dialog[open]::backdrop,
+  .dialog[open] .badge,
+  .dialog[open] .badge-bounce,
+  .panel.is-intro .text,
+  .panel.is-intro .actions,
+  .caret {
+    animation: none;
+  }
+}

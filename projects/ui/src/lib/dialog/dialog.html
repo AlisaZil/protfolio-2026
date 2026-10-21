@@ -1,0 +1,78 @@
+@let c = config();
+
+<dialog
+  #dialog
+  class="dialog"
+  [class.dialog--large]="c.size === 'large'"
+  [attr.aria-labelledby]="titleId"
+  [attr.aria-describedby]="c.message ? messageId : null"
+  (cancel)="onCancelEvent($event)"
+  (close)="onNativeClose()"
+  (click)="onDialogClick($event)"
+>
+  <div
+    class="panel"
+    [class.is-intro]="c.introAnimation"
+    [class.is-waiting]="contentWaiting()"
+  >
+    <div class="header" [class.header--icon]="c.icon">
+      @if (c.icon) {
+        <!-- Outer span moves sideways, inner span bounces (see .badge in dialog.scss) -->
+        <span class="badge" aria-hidden="true">
+          <span class="badge-bounce">
+            <ui-icon [config]="{ name: c.icon, size: 32 }" />
+          </span>
+        </span>
+      } @else {
+        <h2 class="title" [id]="titleId">{{ c.title }}</h2>
+      }
+      @if (c.showCloseButton ?? true) {
+        <button type="button" class="close" aria-label="Close" (click)="close('close-button')">
+          <ui-icon [config]="{ name: 'close', size: 18 }" />
+        </button>
+      }
+    </div>
+
+    @if (c.icon) {
+      <h2 class="title title--below" [id]="titleId">
+        @if (c.introAnimation) {
+          <!-- Screen readers get the whole title at once; the typing is visual only -->
+          <span class="visually-hidden">{{ c.title }}</span>
+          <span aria-hidden="true">{{ typedTitle() }}@if (typing()) {<span class="caret"></span>}</span>
+        } @else {
+          {{ c.title }}
+        }
+      </h2>
+    }
+
+    @if (c.message) {
+      <p class="text" [id]="messageId">{{ c.message }}</p>
+    }
+
+    <ng-content />
+
+    @if (cancelButton() || confirmButton()) {
+      <div class="actions" [class.actions--fill]="c.actionsLayout === 'fill'">
+        @if (c.confirmFirst) {
+          <ng-container [ngTemplateOutlet]="confirmTemplate" />
+          <ng-container [ngTemplateOutlet]="cancelTemplate" />
+        } @else {
+          <ng-container [ngTemplateOutlet]="cancelTemplate" />
+          <ng-container [ngTemplateOutlet]="confirmTemplate" />
+        }
+      </div>
+    }
+  </div>
+</dialog>
+
+<ng-template #cancelTemplate>
+  @if (cancelButton(); as cancel) {
+    <ui-button [config]="cancel" (clicked)="close('cancel')" />
+  }
+</ng-template>
+
+<ng-template #confirmTemplate>
+  @if (confirmButton(); as confirm) {
+    <ui-button [config]="confirm" (clicked)="close('confirm')" />
+  }
+</ng-template>

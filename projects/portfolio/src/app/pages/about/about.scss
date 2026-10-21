@@ -1,0 +1,419 @@
+@use 'tokens' as t;
+
+$divider: color-mix(in srgb, #{t.color(primary)} 35%, transparent);
+
+:host {
+  display: block;
+}
+
+// Hero -------------------------------------------------------------------------
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.95fr);
+  align-items: center;
+  gap: t.space(5);
+  padding-block: t.space(5);
+}
+
+.headline {
+  margin: t.space(2) 0 t.space(3);
+  font-size: clamp(3rem, 7vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: t.color(ink);
+}
+
+.dot {
+  color: t.color(primary);
+}
+
+.subtitle {
+  margin: 0 0 t.space(3);
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: t.color(ink);
+}
+
+.text {
+  max-width: 30rem;
+  margin: 0 0 t.space(2);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  color: t.color(muted);
+}
+
+.resume {
+  margin-top: t.space(1);
+  font-size: 1.0625rem;
+}
+
+// Grisha: two photos stacked; the "looking up" one fades in on hover / tap
+.cat-area {
+  position: relative;
+}
+
+.cat {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 500px;
+  margin-inline-start: auto;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: t.radius(lg);
+  cursor: pointer;
+  transition: transform 300ms ease;
+
+  &:hover,
+  &.is-looking-up {
+    transform: translateY(-4px);
+  }
+
+  &:focus-visible {
+    outline: 3px solid t.color(primary);
+    outline-offset: 6px;
+  }
+}
+
+.cat-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: opacity 140ms ease; // quick, so the two photos barely overlap mid-swap
+
+  &--up {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+}
+
+.cat.is-looking-up {
+  .cat-image {
+    opacity: 0;
+  }
+
+  .cat-image--up {
+    opacity: 1;
+  }
+}
+
+// "Meow!" that pops up by his head on click, floats up and fades
+.meow {
+  --tilt: 0deg;
+  position: absolute;
+  z-index: 2;
+  font-family: 'Caveat', cursive;
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  color: t.color(primary);
+  pointer-events: none;
+  animation: meow-float 1.2s ease-out forwards;
+}
+
+@keyframes meow-float {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.5) rotate(var(--tilt));
+  }
+  15% {
+    opacity: 1;
+    transform: translateY(0) scale(1.15) rotate(var(--tilt));
+  }
+  28% {
+    transform: translateY(-4px) scale(1) rotate(var(--tilt));
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-40px) scale(1) rotate(var(--tilt));
+  }
+}
+
+.note {
+  position: absolute;
+  top: 12%;
+  inset-inline-end: -8px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0;
+  font-family: 'Caveat', cursive;
+  font-size: 1.75rem;
+  line-height: 1;
+  color: t.color(primary);
+  transform: rotate(-10deg);
+  pointer-events: none;
+}
+
+.note-arrow {
+  width: 48px;
+  height: 40px;
+  margin-top: 6px;
+
+  // Point toward the cat when the page is right-to-left
+  &:dir(rtl) {
+    transform: scaleX(-1);
+  }
+}
+
+// Current role -------------------------------------------------------------------
+
+.role {
+  padding-block: t.space(4);
+  border-top: 1px solid $divider;
+}
+
+.role-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  &::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    background: t.color(primary);
+    border-radius: 50%;
+  }
+}
+
+.role-heading {
+  margin: t.space(2) 0 0;
+  font: inherit;
+}
+
+// Company, dates and job title in one clickable row
+.role-toggle {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-areas:
+    'company period chevron'
+    'title   title  chevron';
+  align-items: baseline;
+  column-gap: t.space(2);
+  width: calc(100% + #{t.space(4)});
+  margin-inline: calc(-1 * #{t.space(2)});
+  padding: 12px t.space(2);
+  font: inherit;
+  text-align: start;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: t.radius(md);
+  cursor: pointer;
+  transition: background-color t.$transition;
+
+  &:hover {
+    background: color-mix(in srgb, #{t.color(blush)} 60%, transparent);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+}
+
+.company {
+  grid-area: company;
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: t.color(ink);
+}
+
+.period {
+  grid-area: period;
+  font-size: 1.0625rem;
+  color: t.color(muted);
+}
+
+.role-title {
+  grid-area: title;
+  margin-top: 4px;
+  font-size: 1.25rem;
+  color: t.color(muted);
+}
+
+.chevron {
+  grid-area: chevron;
+  align-self: center;
+  color: t.color(primary);
+  transition: transform 300ms ease;
+}
+
+.role-toggle.is-open .chevron {
+  transform: rotate(180deg);
+}
+
+// While closed, the arrow gently bobs down and up to hint that the role can be opened.
+// (Uses `translate`, separate from the `transform` rotation, so the two don't clash.)
+.role-toggle:not(.is-open) .chevron {
+  animation: chevron-nudge 1.6s ease-in-out infinite;
+}
+
+.role-toggle:not(.is-open):hover .chevron {
+  animation-duration: 0.8s;
+}
+
+@keyframes meow-fade {
+  0%,
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes chevron-nudge {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 5px;
+  }
+}
+
+// Responsibilities: slides open by animating the row height from 0 to its content
+.points-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 400ms cubic-bezier(0.2, 0.8, 0.2, 1);
+
+  > .points {
+    overflow: hidden;
+  }
+
+  &.is-open {
+    grid-template-rows: 1fr;
+  }
+}
+
+.points {
+  display: grid;
+  gap: 10px;
+  max-width: 52rem;
+  margin: 0;
+  padding: t.space(1) 0 0;
+  list-style: none;
+
+  li {
+    position: relative;
+    padding-inline-start: t.space(3);
+    font-size: 1rem;
+    line-height: 1.55;
+    color: t.color(muted);
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 300ms ease,
+      transform 300ms ease;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0.6em;
+      inset-inline-start: 6px;
+      width: 6px;
+      height: 6px;
+      background: t.color(primary);
+      border-radius: 50%;
+    }
+  }
+}
+
+// Points fade in one after another when opening
+.points-wrap.is-open .points li {
+  opacity: 1;
+  transform: none;
+
+  @for $i from 1 through 10 {
+    &:nth-child(#{$i}) {
+      transition-delay: #{80 + $i * 45}ms;
+    }
+  }
+}
+
+.role-text {
+  margin: t.space(2) 0;
+}
+
+.role-text {
+  font-size: 1.0625rem;
+  color: t.color(ink);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: t.space(1);
+}
+
+// "Next step" band (same as the home page) -----------------------------------------
+
+.next-step {
+  padding-block: t.space(2) t.space(4);
+}
+
+// Responsive -------------------------------------------------------------------
+
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr);
+    gap: t.space(4);
+  }
+
+  .cat {
+    max-width: 380px;
+    margin-inline: auto;
+  }
+
+  .note {
+    top: -4%;
+    inset-inline-end: 0;
+    font-size: 1.375rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .role-toggle {
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'company chevron'
+      'period  chevron'
+      'title   chevron';
+  }
+
+  .company {
+    font-size: 1.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cat,
+  .cat-image,
+  .chevron,
+  .points-wrap,
+  .points li {
+    transition: none;
+  }
+
+  // No movement: the "Meow!" just appears and fades
+  .meow {
+    animation-name: meow-fade;
+  }
+
+  .role-toggle:not(.is-open) .chevron {
+    animation: none;
+  }
+}

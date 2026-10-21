@@ -1,0 +1,119 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: t.space(2);
+  color: t.color(ink);
+  background: t.color(surface);
+  border: 1px solid t.color(border);
+  border-radius: t.radius(lg);
+  transition:
+    box-shadow t.$transition,
+    transform t.$transition;
+}
+
+:host(.is-interactive) {
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: t.shadow(md);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+}
+
+.title,
+.company,
+.skill-title {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: t.color(muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: t.space(1);
+}
+
+// Project
+.media {
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  background: t.color(blush);
+  border-radius: t.radius(md);
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.title {
+  font-size: 1.25rem;
+}
+
+// Sits at the bottom, so links line up across cards of different heights
+.link {
+  align-self: flex-start;
+  margin-top: auto;
+  padding-top: t.space(1);
+}
+
+// Experience
+.experience {
+  position: relative;
+  padding-inline-start: t.space(4);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 7px;
+    inset-inline-start: 4px;
+    width: 10px;
+    height: 10px;
+    background: t.color(primary);
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px t.color(blush);
+  }
+
+  .text {
+    font-size: 0.875rem;
+  }
+}
+
+.period {
+  margin: 0;
+  font-size: 0.8125rem;
+  color: t.color(muted);
+}
+
+.company {
+  margin-top: 6px;
+  font-size: 1.0625rem;
+}
+
+.role {
+  margin: 2px 0 12px;
+  font-size: 0.9375rem;
+  color: t.color(muted);
+}
+
+// Skill
+.skill-title {
+  font-size: 1rem;
+}

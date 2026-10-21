@@ -1,0 +1,56 @@
+<section class="hero" aria-labelledby="hero-title">
+  <!-- Title: each line slides up in turn on page load -->
+  <div class="container hero-top" [appSlideIn]="{ stagger: 0.08, onScroll: false }">
+    <p class="ui-eyebrow">{{ language.t('home.eyebrow') }}</p>
+    <h1 id="hero-title" class="headline">
+      {{ language.t('home.headline') }}
+      <span class="accent">{{ language.t('home.headlineAccent') }}</span>
+    </h1>
+  </div>
+
+  <!-- Gosha, lying on a line that runs across the page -->
+  <div class="kitten-row" [appSlideIn]="{ delay: 0.2, onScroll: false }">
+    <!-- Click (or Enter) to make Gosha pop hearts -->
+    <button #kittenButton type="button" class="kitten" (click)="onKittenClick()">
+      <img
+        src="images/gosha.png"
+        [alt]="language.t('home.kittenAlt')"
+        width="1086"
+        height="1448"
+        fetchpriority="high"
+      />
+      @for (heart of hearts(); track heart.id) {
+        <svg
+          class="heart"
+          viewBox="0 0 24 24"
+          aria-hidden="true"
+          [style.--dx.px]="heart.dx"
+          [style.--dy.px]="heart.dy"
+          [style.--rot.deg]="heart.rotate"
+          [style.--size]="heart.size"
+          [style.color]="heart.color"
+        >
+          <path [attr.d]="heartPath" fill="currentColor" />
+        </svg>
+      }
+    </button>
+  </div>
+
+  <div class="container hero-bottom" [appSlideIn]="{ stagger: 0.08, delay: 0.3, onScroll: false }">
+    <p class="lead">{{ language.t('home.lead') }}</p>
+
+    <div class="actions">
+      <ui-button [config]="exploreButton()" (clicked)="go('/work')" />
+      <ui-button [config]="contactButton()" (clicked)="go('/contact')" />
+    </div>
+
+    <ul class="stack" [attr.aria-label]="language.t('home.stack')">
+      @for (tech of techStack; track tech.label) {
+        <li class="stack-item">
+          <span class="logo" aria-hidden="true" [innerHTML]="tech.logo"></span>
+          {{ tech.label }}
+        </li>
+      }
+    </ul>
+  </div>
+</section>

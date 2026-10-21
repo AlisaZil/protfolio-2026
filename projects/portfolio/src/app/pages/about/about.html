@@ -1,0 +1,106 @@
+<section class="hero container" aria-labelledby="about-title">
+  <div class="intro" [appSlideIn]="{ stagger: 0.08, onScroll: false }">
+    <p class="ui-eyebrow">{{ language.t('about.eyebrow') }}</p>
+    <h1 id="about-title" class="headline">
+      {{ language.t('about.title') }}<span class="dot">.</span>
+    </h1>
+    <p class="subtitle">
+      {{ language.t('about.subtitle1') }}<br />
+      {{ language.t('about.subtitle2') }}
+    </p>
+    <p class="text">{{ language.t('about.paragraph1') }}</p>
+    <p class="text">{{ language.t('about.paragraph2') }}</p>
+    <p class="text">{{ language.t('about.paragraph3') }}</p>
+    <ui-link class="resume" [config]="resumeLink()" />
+  </div>
+
+  <div class="cat-area" [appSlideIn]="{ from: 'right', distance: 48, delay: 0.2, onScroll: false }">
+    <button
+      #catButton
+      type="button"
+      class="cat"
+      [class.is-looking-up]="lookingUp()"
+      [attr.aria-pressed]="lookingUp()"
+      [attr.aria-label]="language.t('about.cat.label')"
+      (pointerenter)="onPointerEnter($event)"
+      (pointerleave)="onPointerLeave($event)"
+      (click)="onCatClick()"
+    >
+      <img
+        class="cat-image"
+        src="images/grisha-looking.png"
+        [alt]="language.t('about.cat.alt')"
+        width="1086"
+        height="1448"
+        fetchpriority="high"
+      />
+      <img
+        class="cat-image cat-image--up"
+        src="images/grisha-looking-up.png"
+        alt=""
+        aria-hidden="true"
+        width="1086"
+        height="1448"
+      />
+    </button>
+
+    @for (bubble of meowBubbles(); track bubble.id) {
+      <span
+        class="meow"
+        aria-hidden="true"
+        [style.inset-inline-start.%]="bubble.x"
+        [style.top.%]="bubble.y"
+        [style.--tilt]="bubble.tilt + 'deg'"
+        >{{ language.t('about.cat.meow') }}</span
+      >
+    }
+
+    <p class="note" aria-hidden="true">
+      <span class="note-text">{{ language.t('about.cat.note') }} <span class="heart">♡</span></span>
+      <svg class="note-arrow" viewBox="0 0 48 40" fill="none">
+        <path d="M40 3c3 16-8 28-34 31" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" />
+        <path d="M13 27l-7 7 9 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </p>
+  </div>
+</section>
+
+<section class="role container" aria-labelledby="role-title" appSlideIn>
+  <p class="ui-eyebrow role-eyebrow">{{ language.t('about.role.eyebrow') }}</p>
+
+  <!-- The header is a button: it opens and closes the list of responsibilities -->
+  <h2 id="role-title" class="role-heading">
+    <button
+      type="button"
+      class="role-toggle"
+      [class.is-open]="roleOpen()"
+      [attr.aria-expanded]="roleOpen()"
+      aria-controls="role-points"
+      (click)="roleOpen.set(!roleOpen())"
+    >
+      <span class="company">{{ language.t('about.role.company') }}</span>
+      <span class="period">{{ role.start }} – {{ language.t('about.role.present') }}</span>
+      <span class="role-title">{{ language.t('about.role.title') }}</span>
+      <ui-icon class="chevron" [config]="chevronIcon" />
+    </button>
+  </h2>
+
+  <div id="role-points" class="points-wrap" [class.is-open]="roleOpen()" [inert]="!roleOpen()">
+    <ul class="points">
+      @for (point of rolePoints(); track point.id) {
+        <li>{{ point.text }}</li>
+      }
+    </ul>
+  </div>
+
+  <p class="role-text">{{ language.t('about.role.text') }}</p>
+  <div class="chips">
+    @for (chip of techChips; track chip.id) {
+      <ui-chip [config]="chip" />
+    }
+  </div>
+</section>
+
+<div class="container next-step" appSlideIn>
+  <ui-cta [config]="cta()" />
+</div>

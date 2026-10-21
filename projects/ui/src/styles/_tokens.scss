@@ -1,0 +1,122 @@
+// Design tokens for the Portfolio UI kit.
+//
+// Components read tokens through the functions below, e.g. `t.color(primary)`.
+// Each one compiles to a CSS variable with a built-in fallback:
+//   var(--ui-color-primary, #ff168a)
+// so components look right on their own, and an app can still re-theme them by
+// overriding the variables on :root.
+
+@use 'sass:map';
+@use 'sass:meta';
+
+$colors: (
+  // Brand palette
+  'primary': #ff168a,
+  'primary-hover': #e80c7a,
+  'primary-soft': #ffb3d6,
+  'ink': #101c35,
+  'muted': #62718b,
+  'canvas': #fffcfa,
+  'blush': #fce8f2,
+  'border': #e9e4e8,
+  'border-strong': #d8d1d6,
+  'surface': #ffffff,
+  'neutral': #f6f4f7,
+  'neutral-hover': #eeebf0,
+  'disabled': #b8bfcb,
+  // Status
+  'success': #22a55b,
+  'success-soft': #eaf7ee,
+  'success-border': #cdebd7,
+  'info': #3b82f6,
+  'info-soft': #eef4ff,
+  'info-border': #d5e3fb,
+  'error': #e5294f,
+  'error-soft': #fff5f7,
+  'error-border': #f8cfd8,
+  // Chip accents
+  'lavender': #efebfd,
+  'lavender-ink': #5b4fc4,
+);
+
+$spacing: (
+  1: 8px,
+  2: 16px,
+  3: 24px,
+  4: 32px,
+  5: 48px,
+  6: 64px,
+);
+
+$radius: (
+  'sm': 8px,
+  'md': 12px,
+  'lg': 16px,
+  'pill': 999px,
+);
+
+$font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+
+$shadows: (
+  'sm': 0 1px 2px rgb(16 28 53 / 0.04),
+  'md': 0 8px 24px rgb(16 28 53 / 0.08),
+  'lg': 0 16px 40px rgb(16 28 53 / 0.12),
+);
+
+$focus-ring-value: 0 0 0 4px rgb(255 22 138 / 0.18);
+$transition-value: 150ms ease;
+
+@function -lookup($map, $key, $kind) {
+  @if not map.has-key($map, $key) {
+    @error 'Unknown #{$kind} token: #{$key}';
+  }
+  @return map.get($map, $key);
+}
+
+@function color($name) {
+  // Token names like `lavender` are also CSS color names, which Sass reads
+  // as colors rather than strings. Turn them back into their name.
+  @if meta.type-of($name) == 'color' {
+    $name: meta.inspect($name);
+  }
+  @return var(--ui-color-#{$name}, #{-lookup($colors, $name, 'color')});
+}
+
+@function space($step) {
+  @return var(--ui-space-#{$step}, #{-lookup($spacing, $step, 'spacing')});
+}
+
+@function radius($name) {
+  @return var(--ui-radius-#{$name}, #{-lookup($radius, $name, 'radius')});
+}
+
+@function shadow($name) {
+  @return var(--ui-shadow-#{$name}, #{-lookup($shadows, $name, 'shadow')});
+}
+
+$focus-ring: var(--ui-focus-ring, #{$focus-ring-value});
+$transition: var(--ui-transition, #{$transition-value});
+
+@mixin focus-ring {
+  outline: none;
+  box-shadow: $focus-ring;
+}
+
+// Writes every token as a CSS variable. Used once, on :root, in ui.scss.
+@mixin custom-properties {
+  @each $name, $value in $colors {
+    --ui-color-#{$name}: #{$value};
+  }
+  @each $step, $value in $spacing {
+    --ui-space-#{$step}: #{$value};
+  }
+  @each $name, $value in $radius {
+    --ui-radius-#{$name}: #{$value};
+  }
+  @each $name, $value in $shadows {
+    --ui-shadow-#{$name}: #{$value};
+  }
+  --ui-font-family: #{$font-family};
+  --ui-focus-ring: #{$focus-ring-value};
+  --ui-transition: #{$transition-value};
+}

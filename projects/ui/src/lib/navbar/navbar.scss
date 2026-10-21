@@ -1,0 +1,132 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: block;
+  position: relative;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: t.space(4);
+}
+
+.brand {
+  margin-inline-end: auto;
+  font-size: 1.0625rem;
+  font-weight: 700;
+  color: t.color(ink);
+  text-decoration: none;
+
+  &:focus-visible {
+    @include t.focus-ring;
+    border-radius: 4px;
+  }
+}
+
+.links {
+  display: flex;
+  align-items: center;
+  gap: t.space(4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.link {
+  position: relative;
+  display: inline-block;
+  padding: t.space(1) 0;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: t.color(ink);
+  text-decoration: none;
+  transition: color t.$transition;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 -2px;
+    height: 2px;
+    border-radius: 2px;
+    background: transparent;
+    transition: background-color t.$transition;
+  }
+
+  &:hover {
+    color: t.color(primary);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+    border-radius: 4px;
+  }
+
+  &.is-active {
+    color: t.color(primary);
+
+    &::after {
+      background: t.color(primary);
+    }
+  }
+}
+
+.menu-button {
+  display: inline-grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin-inline-start: auto;
+  padding: 0;
+  color: t.color(ink);
+  background: transparent;
+  border: 0;
+  border-radius: t.radius(sm);
+  cursor: pointer;
+
+  &:hover {
+    background: t.color(neutral);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+}
+
+// Mobile: links become a dropdown panel under the bar
+:host(.is-collapsed) {
+  .links {
+    position: absolute;
+    top: calc(100% + #{t.space(1)});
+    right: 0;
+    left: 0;
+    z-index: 10;
+    display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    padding: t.space(1);
+    background: t.color(surface);
+    border: 1px solid t.color(border);
+    border-radius: t.radius(md);
+    box-shadow: t.shadow(md);
+
+    &.is-open {
+      display: flex;
+    }
+  }
+
+  .link {
+    display: block;
+    padding: 12px t.space(2);
+    border-radius: t.radius(sm);
+
+    &::after {
+      display: none;
+    }
+
+    &.is-active {
+      background: t.color(blush);
+    }
+  }
+}

@@ -1,0 +1,54 @@
+@let c = config();
+
+@if (c.disabled) {
+  <span class="link is-disabled" role="link" aria-disabled="true">
+    <ng-container [ngTemplateOutlet]="content" />
+  </span>
+} @else if (c.routerLink) {
+  <a
+    class="link"
+    [routerLink]="c.routerLink"
+    [attr.target]="c.target || null"
+    [attr.aria-label]="c.ariaLabel || null"
+    (click)="clicked.emit($event)"
+    (keydown.enter)="onEnter($event)"
+    (focus)="focused.emit($event)"
+    (blur)="blurred.emit($event)"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </a>
+} @else if (c.href) {
+  <a
+    class="link"
+    [href]="c.href"
+    [attr.download]="c.download === true ? '' : c.download || null"
+    [attr.target]="c.target || null"
+    [attr.rel]="c.target === '_blank' ? 'noopener noreferrer' : null"
+    [attr.aria-label]="c.ariaLabel || null"
+    (click)="clicked.emit($event)"
+    (keydown.enter)="onEnter($event)"
+    (focus)="focused.emit($event)"
+    (blur)="blurred.emit($event)"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </a>
+} @else {
+  <button
+    type="button"
+    class="link"
+    [attr.aria-label]="c.ariaLabel || null"
+    (click)="clicked.emit($event)"
+    (keydown.enter)="onEnter($event)"
+    (focus)="focused.emit($event)"
+    (blur)="blurred.emit($event)"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </button>
+}
+
+<ng-template #content>
+  <span>{{ c.label }}</span>
+  @if (c.icon) {
+    <ui-icon [config]="{ name: c.icon }" />
+  }
+</ng-template>

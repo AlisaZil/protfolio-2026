@@ -1,0 +1,37 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: inline-flex;
+}
+
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 0;
+  font: inherit;
+  font-weight: 500;
+  color: t.color(primary);
+  text-decoration: none;
+  background: none;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  cursor: pointer;
+  transition: border-color t.$transition;
+
+  &:hover {
+    border-bottom-color: currentColor;
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-bottom: 1px dashed currentColor;
+  }
+
+  &.is-disabled {
+    color: t.color(disabled);
+    cursor: not-allowed;
+    border-bottom-color: transparent;
+  }
+}

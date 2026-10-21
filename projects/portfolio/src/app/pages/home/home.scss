@@ -1,0 +1,195 @@
+@use 'tokens' as t;
+
+:host {
+  display: block;
+}
+
+// Hero ------------------------------------------------------------------------
+// Centred title, Gosha lying on a full-width line, then intro, buttons and tech row.
+
+.hero {
+  padding-block: t.space(5) t.space(6);
+  text-align: center;
+}
+
+.headline {
+  margin: t.space(2) 0 0;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  color: t.color(ink);
+}
+
+.accent {
+  display: block;
+  color: t.color(primary);
+}
+
+// The photo has empty space above and below the kitten: this box shows only the
+// part with him in it (the photo is 1086×1448; he sits between y≈310 and y≈1225).
+.kitten-row {
+  position: relative;
+  margin-top: t.space(2);
+
+  // The line he lies on, across the whole page, just under his paws
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    bottom: 19%;
+    height: 1px;
+    background: t.color(border-strong);
+  }
+}
+
+.kitten {
+  position: relative;
+  isolation: isolate;
+  display: flow-root; // keeps the photo's negative margins inside this box
+  width: min(440px, 72vw);
+  margin-inline: auto;
+  padding: 0;
+  font: inherit;
+  background: none;
+  border: 0;
+  border-radius: t.radius(lg);
+  cursor: pointer;
+
+  img {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: 100%;
+    height: auto;
+    // Skip the empty space above (310 / 1086) and below (223 / 1086) him
+    margin-block: -28.5% -20.5%;
+  }
+
+  // Soft shadow on the line under him
+  &::after {
+    content: '';
+    position: absolute;
+    inset-inline: 8% 2%;
+    bottom: 1%;
+    height: 14%;
+    background: radial-gradient(closest-side, rgb(16 28 53 / 0.2), transparent);
+  }
+
+  &:focus-visible {
+    outline: 3px solid t.color(primary);
+    outline-offset: 8px;
+  }
+}
+
+// Hearts: start just behind the top of Gosha's head (so they peek out straight away),
+// float out to (--dx, --dy) and fade
+.heart {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  z-index: 0;
+  width: 28px;
+  height: 28px;
+  pointer-events: none;
+  opacity: 0;
+  animation: heart-burst 1.2s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+@keyframes heart-burst {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0) rotate(0deg);
+  }
+  6% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(var(--size)) rotate(var(--rot));
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(var(--size))
+      rotate(var(--rot));
+  }
+}
+
+@keyframes heart-fade {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  30%,
+  70% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--dx) * 0.4), calc(-50% + var(--dy) * 0.4));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  // Hearts appear around him and fade, without flying
+  .heart {
+    animation-name: heart-fade;
+  }
+}
+
+.hero-bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: t.space(4);
+}
+
+.lead {
+  max-width: 44rem;
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.55;
+  color: color-mix(in srgb, t.color(ink) 82%, white);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: t.space(2) t.space(3);
+  margin-top: t.space(4);
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: t.space(2) t.space(5);
+  margin: t.space(5) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stack-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.0625rem;
+  color: t.color(ink);
+}
+
+// Logos (shared with project chips, see data/tech.ts): 28px tall, width follows the logo
+.logo {
+  display: inline-flex;
+  height: 28px;
+
+  ::ng-deep svg {
+    width: auto;
+    height: 100%;
+  }
+}
+
+// Responsive -------------------------------------------------------------------
+
+@media (max-width: 960px) {
+  .hero {
+    padding-block: t.space(4) t.space(5);
+  }
+}

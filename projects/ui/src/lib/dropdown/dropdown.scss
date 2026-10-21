@@ -1,0 +1,166 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  position: relative;
+  display: inline-flex;
+}
+
+.trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: t.space(1);
+  padding: 7px 10px;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: t.color(ink);
+  background: transparent;
+  border: 1px solid t.color(border);
+  border-radius: t.radius(sm);
+  cursor: pointer;
+  transition:
+    background-color t.$transition,
+    border-color t.$transition;
+
+  &:hover {
+    background: t.color(neutral);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+
+  &[aria-expanded='true'] {
+    border-color: t.color(border-strong);
+
+    .chevron {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.chevron {
+  color: t.color(muted);
+  transition: transform 200ms ease;
+}
+
+.image {
+  flex: none;
+  width: 20px;
+  height: 15px;
+  object-fit: cover;
+  border-radius: 2px;
+  box-shadow: 0 0 0 1px rgb(16 28 53 / 0.08);
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  inset-inline-start: 0;
+  z-index: 30;
+  min-width: max(100%, 168px);
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: t.color(surface);
+  border: 1px solid t.color(border);
+  border-radius: t.radius(md);
+  box-shadow: t.shadow(md);
+  outline: none;
+  transform-origin: top;
+
+  &--end {
+    inset-inline-start: auto;
+    inset-inline-end: 0;
+  }
+
+  &:focus-visible {
+    box-shadow:
+      t.shadow(md),
+      t.$focus-ring;
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  font-size: 0.875rem;
+  color: t.color(ink);
+  white-space: nowrap;
+  border-radius: t.radius(sm);
+  cursor: pointer;
+  transition: background-color 120ms ease;
+
+  &.is-active {
+    background: t.color(blush);
+  }
+
+  &[aria-selected='true'] {
+    font-weight: 600;
+  }
+}
+
+// Images only: a compact list of flags
+.menu--images {
+  min-width: 0;
+
+  .option {
+    justify-content: center;
+    padding: 8px 10px;
+  }
+
+  .check {
+    display: none;
+  }
+
+  .option[aria-selected='true'] {
+    background: t.color(blush);
+  }
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.check {
+  margin-inline-start: auto;
+  color: t.color(primary);
+}
+
+// Open / close animation
+.menu-enter {
+  animation: menu-in 160ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.menu-leave {
+  animation: menu-out 110ms ease-in forwards;
+}
+
+@keyframes menu-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+}
+
+@keyframes menu-out {
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-enter,
+  .menu-leave {
+    animation: none;
+  }
+}

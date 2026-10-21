@@ -1,0 +1,60 @@
+@let c = config();
+
+<button
+  #trigger
+  type="button"
+  class="trigger"
+  aria-haspopup="listbox"
+  [attr.aria-expanded]="isOpen()"
+  [attr.aria-controls]="listId"
+  [attr.aria-label]="c.ariaLabel + ': ' + (current()?.label ?? '')"
+  [attr.title]="c.imagesOnly ? current()?.label : null"
+  (click)="toggle()"
+  (keydown)="onTriggerKeydown($event)"
+>
+  @if (current()?.image; as image) {
+    <img class="image" [src]="image.src" alt="" />
+  }
+  @if (!c.hideLabel && !c.imagesOnly) {
+    <span class="label">{{ current()?.label }}</span>
+  }
+  <ui-icon class="chevron" [config]="chevronIcon" />
+</button>
+
+@if (isOpen()) {
+  <ul
+    #list
+    class="menu"
+    [class.menu--end]="c.align === 'end'"
+    [class.menu--images]="c.imagesOnly"
+    role="listbox"
+    tabindex="-1"
+    [id]="listId"
+    [attr.aria-label]="c.ariaLabel"
+    [attr.aria-activedescendant]="optionId(activeIndex())"
+    (keydown)="onListKeydown($event)"
+    animate.enter="menu-enter"
+    animate.leave="menu-leave"
+  >
+    @for (option of c.options; track option.value; let i = $index) {
+      <li
+        role="option"
+        class="option"
+        [id]="optionId(i)"
+        [class.is-active]="i === activeIndex()"
+        [attr.aria-selected]="option.value === selected()"
+        [attr.title]="c.imagesOnly ? option.label : null"
+        (click)="select(option)"
+        (mouseenter)="activeIndex.set(i)"
+      >
+        @if (option.image; as image) {
+          <img class="image" [src]="image.src" [alt]="image.alt ?? ''" />
+        }
+        <span [class.visually-hidden]="c.imagesOnly">{{ option.label }}</span>
+        @if (option.value === selected()) {
+          <ui-icon class="check" [config]="checkIcon" />
+        }
+      </li>
+    }
+  </ul>
+}

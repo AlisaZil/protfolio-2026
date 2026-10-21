@@ -1,0 +1,48 @@
+@let c = cfg();
+
+@if (c.href && !c.disabled && !c.loading) {
+  <a
+    [class]="classes()"
+    [href]="c.href"
+    [attr.download]="downloadAttr()"
+    [attr.target]="c.target || null"
+    [attr.rel]="c.target === '_blank' ? 'noopener noreferrer' : null"
+    [attr.aria-label]="c.ariaLabel || null"
+    (click)="clicked.emit($event)"
+    (keydown.enter)="onEnter($event)"
+    (focus)="focused.emit($event)"
+    (blur)="blurred.emit($event)"
+    (mouseenter)="hoverStart.emit($event)"
+    (mouseleave)="hoverEnd.emit($event)"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </a>
+} @else {
+  <button
+    [type]="c.type"
+    [class]="classes()"
+    [disabled]="c.disabled || c.loading"
+    [attr.aria-busy]="c.loading || null"
+    [attr.aria-label]="c.ariaLabel || null"
+    (click)="clicked.emit($event)"
+    (keydown.enter)="onEnter($event)"
+    (focus)="focused.emit($event)"
+    (blur)="blurred.emit($event)"
+    (mouseenter)="hoverStart.emit($event)"
+    (mouseleave)="hoverEnd.emit($event)"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </button>
+}
+
+<ng-template #content>
+  @if (c.loading) {
+    <span class="spinner" aria-hidden="true"></span>
+  } @else if (c.icon && c.iconPosition === 'start') {
+    <ui-icon [config]="{ name: c.icon }" />
+  }
+  <span>{{ c.label }}</span>
+  @if (!c.loading && c.icon && c.iconPosition === 'end') {
+    <ui-icon [config]="{ name: c.icon }" />
+  }
+</ng-template>

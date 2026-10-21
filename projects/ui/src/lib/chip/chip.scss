@@ -1,0 +1,127 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: t.color(ink);
+  background: t.color(neutral);
+  border: 1px solid transparent;
+  border-radius: t.radius(pill);
+  transition:
+    background-color t.$transition,
+    color t.$transition,
+    border-color t.$transition;
+}
+
+.label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 14px;
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: inherit;
+}
+
+button.label {
+  cursor: pointer;
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+
+.logo {
+  flex: none;
+  width: 14px;
+  height: 14px;
+}
+
+// Multi-colour inline SVG logos: 18px tall, width follows the logo (e.g. wide "Sass" text)
+.logo--svg {
+  display: inline-flex;
+  width: auto;
+  height: 18px;
+
+  ::ng-deep svg {
+    width: auto;
+    height: 100%;
+  }
+}
+
+.remove {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  margin-inline-end: 6px;
+  padding: 0;
+  color: inherit;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+    background: rgb(16 28 53 / 0.06);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+}
+
+:host(.is-removable) .label {
+  padding-inline-end: 6px;
+}
+
+// Tech chip colors
+:host(.chip--pink) {
+  color: t.color(primary);
+  background: t.color(blush);
+}
+
+:host(.chip--lavender) {
+  color: t.color(lavender-ink);
+  background: t.color(lavender);
+}
+
+// Filter chip (pill)
+:host(.chip--filter) {
+  font-size: 0.875rem;
+  border-color: t.color(border);
+
+  .label {
+    padding: 8px 18px;
+  }
+
+  &:hover:not(.is-disabled) {
+    background: t.color(neutral-hover);
+  }
+}
+
+:host(.chip--filter.is-selected) {
+  color: t.color(primary);
+  background: t.color(blush);
+  border-color: transparent;
+
+  &:hover {
+    background: t.color(blush);
+  }
+}
+
+:host(.is-disabled) {
+  color: t.color(disabled);
+  background: t.color(neutral);
+}

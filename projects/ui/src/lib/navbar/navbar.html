@@ -1,0 +1,60 @@
+@let c = config();
+
+<nav class="nav" [attr.aria-label]="c.ariaLabel || 'Main'">
+  @if (c.brand; as brand) {
+    @if (brand.routerLink) {
+      <a class="brand" [routerLink]="brand.routerLink">{{ brand.label }}</a>
+    } @else {
+      <a class="brand" [href]="brand.href || '/'">{{ brand.label }}</a>
+    }
+  }
+
+  @if (collapsed()) {
+    <button
+      type="button"
+      class="menu-button"
+      [attr.aria-expanded]="menuOpen()"
+      [attr.aria-controls]="listId"
+      [attr.aria-label]="menuOpen() ? 'Close menu' : 'Open menu'"
+      (click)="toggleMenu()"
+    >
+      <ui-icon [config]="menuIcon()" />
+    </button>
+  }
+
+  <ul class="links" [id]="listId" [class.is-open]="menuOpen()">
+    @for (item of c.items; track item.id) {
+      <li>
+        @if (item.routerLink && !c.activeId) {
+          <a
+            class="link"
+            [routerLink]="item.routerLink"
+            routerLinkActive="is-active"
+            [routerLinkActiveOptions]="{ exact: !!item.exact }"
+            ariaCurrentWhenActive="page"
+            (click)="select(item)"
+            >{{ item.label }}</a
+          >
+        } @else if (item.routerLink) {
+          <a
+            class="link"
+            [routerLink]="item.routerLink"
+            [class.is-active]="item.id === c.activeId"
+            [attr.aria-current]="item.id === c.activeId ? 'page' : null"
+            (click)="select(item)"
+            >{{ item.label }}</a
+          >
+        } @else {
+          <a
+            class="link"
+            [href]="item.href || null"
+            [class.is-active]="item.id === c.activeId"
+            [attr.aria-current]="item.id === c.activeId ? 'page' : null"
+            (click)="select(item)"
+            >{{ item.label }}</a
+          >
+        }
+      </li>
+    }
+  </ul>
+</nav>

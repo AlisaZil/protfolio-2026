@@ -1,0 +1,56 @@
+@use 'tokens' as t;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: t.space(3);
+  padding-block: t.space(3);
+}
+
+.nav {
+  flex: 1;
+  min-width: 0;
+  margin-inline-end: t.space(2);
+}
+
+main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  outline: none;
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  inset-inline-start: t.space(2);
+  z-index: 100;
+  padding: t.space(1) t.space(2);
+  color: #fff;
+  background: t.color(ink);
+  border-radius: t.radius(sm);
+
+  &:focus {
+    top: t.space(2);
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    gap: t.space(1);
+  }
+
+  .nav {
+    margin-inline-end: 0;
+  }
+
+  .resume {
+    display: none;
+  }
+}

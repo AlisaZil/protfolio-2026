@@ -1,0 +1,120 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: inline-flex;
+}
+
+:host(.full-width) {
+  display: flex;
+
+  .btn {
+    width: 100%;
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: t.space(1);
+  padding: 10px 20px;
+  font: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-decoration: none;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  border-radius: t.radius(sm);
+  cursor: pointer;
+  transition:
+    background-color t.$transition,
+    border-color t.$transition,
+    color t.$transition,
+    box-shadow t.$transition;
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &[aria-busy='true'] {
+    cursor: progress;
+  }
+
+  // Sizes
+  &--sm {
+    padding: 6px 14px;
+    font-size: 0.8125rem;
+  }
+
+  &--lg {
+    padding: 14px 24px;
+    font-size: 1rem;
+  }
+
+  // Primary — filled pink
+  &--primary {
+    color: #fff;
+    background: t.color(primary);
+
+    &:hover:not(:disabled) {
+      background: t.color(primary-hover);
+    }
+
+    &:disabled {
+      background: t.color(primary-soft);
+    }
+  }
+
+  // Secondary — outlined pink
+  &--secondary {
+    color: t.color(primary);
+    background: transparent;
+    border-color: t.color(primary);
+
+    &:hover:not(:disabled) {
+      background: t.color(blush);
+    }
+
+    &:disabled {
+      color: t.color(disabled);
+      border-color: t.color(border);
+    }
+  }
+
+  // Neutral — quiet grey
+  &--neutral {
+    font-weight: 500;
+    color: t.color(ink);
+    background: t.color(neutral);
+    border-color: t.color(border);
+
+    &:hover:not(:disabled) {
+      background: t.color(neutral-hover);
+    }
+
+    &:disabled {
+      color: t.color(disabled);
+      border-color: transparent;
+    }
+  }
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

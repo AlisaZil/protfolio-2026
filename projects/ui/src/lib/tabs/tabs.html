@@ -1,0 +1,40 @@
+<div
+  class="tablist"
+  role="tablist"
+  [attr.aria-label]="config().ariaLabel || null"
+  (keydown)="onKeydown($event)"
+>
+  @for (tab of config().tabs; track tab.id) {
+    <button
+      #tabButton
+      type="button"
+      role="tab"
+      class="tab"
+      [id]="tabId(tab.id)"
+      [class.is-active]="tab.id === activeId()"
+      [attr.aria-selected]="tab.id === activeId()"
+      [attr.aria-controls]="panelId(tab.id)"
+      [tabIndex]="tab.id === activeId() ? 0 : -1"
+      [disabled]="tab.disabled"
+      (click)="select(tab)"
+      (focus)="focused.emit($event)"
+      (blur)="blurred.emit($event)"
+    >
+      {{ tab.label }}
+    </button>
+  }
+</div>
+
+@for (panel of panels(); track panel.id()) {
+  @if (panel.id() === activeId()) {
+    <div
+      role="tabpanel"
+      class="panel"
+      tabindex="0"
+      [id]="panelId(panel.id())"
+      [attr.aria-labelledby]="tabId(panel.id())"
+    >
+      <ng-container [ngTemplateOutlet]="panel.template" />
+    </div>
+  }
+}

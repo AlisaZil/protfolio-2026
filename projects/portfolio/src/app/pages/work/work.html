@@ -1,0 +1,17 @@
+<section class="work container" aria-labelledby="work-title">
+  <div class="intro" [appSlideIn]="{ stagger: 0.08, onScroll: false }">
+    <h1 id="work-title" class="ui-visually-hidden">{{ language.t('work.title') }}</h1>
+    <p class="lead">{{ language.t('work.lead') }}</p>
+    <ui-chip-group [config]="filters()" (selectionChange)="onFilterChange($event)" />
+  </div>
+
+  <ul class="grid" [appSlideIn]="{ stagger: 0.1, delay: 0.15, onScroll: false }">
+    @for (card of cards(); track card.id) {
+      <li>
+        <ui-card [config]="card.config" />
+      </li>
+    } @empty {
+      <li class="empty">{{ language.t('work.empty') }}</li>
+    }
+  </ul>
+</section>

@@ -1,0 +1,24 @@
+<a class="skip-link" href="#main">{{ language.t('nav.skip') }}</a>
+
+<header class="header container">
+  <ui-navbar class="nav" [config]="navbar()" />
+  <ui-dropdown
+    class="language"
+    [config]="languageDropdown()"
+    (valueChange)="language.use($event.value)"
+  />
+  <ui-button class="resume" [config]="resumeButton()" />
+</header>
+
+<main id="main" tabindex="-1">
+  <router-outlet />
+</main>
+
+<div class="container">
+  <ui-footer [config]="footer()" (linkClicked)="socialClicks.clicked($event.link, $event.event)" />
+</div>
+
+<ui-toast-container />
+
+<!-- "Off to LinkedIn?" popup, opened from any LinkedIn link -->
+<ui-dialog [config]="socialClicks.linkedInDialog()" (closed)="socialClicks.dialogClosed($event)" />

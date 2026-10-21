@@ -1,0 +1,44 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: t.space(2);
+  pointer-events: none;
+
+  > * {
+    pointer-events: auto;
+  }
+}
+
+:host(.pos-top-left),
+:host(.pos-top-center),
+:host(.pos-top-right) {
+  top: 0;
+}
+
+:host(.pos-bottom-left),
+:host(.pos-bottom-center),
+:host(.pos-bottom-right) {
+  bottom: 0;
+  flex-direction: column-reverse;
+}
+
+:host(.pos-top-left),
+:host(.pos-bottom-left) {
+  left: 0;
+}
+
+:host(.pos-top-right),
+:host(.pos-bottom-right) {
+  right: 0;
+}
+
+:host(.pos-top-center),
+:host(.pos-bottom-center) {
+  left: 50%;
+  transform: translateX(-50%);
+}

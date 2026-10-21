@@ -1,0 +1,111 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: t.space(1);
+}
+
+.label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: t.color(ink);
+}
+
+.required {
+  margin-inline-start: 2px;
+  color: t.color(primary);
+}
+
+.control {
+  width: 100%;
+  padding: 11px 16px;
+  font: inherit;
+  font-size: 0.9375rem;
+  color: t.color(ink);
+  background: t.color(surface);
+  border: 1px solid t.color(border);
+  border-radius: t.radius(sm);
+  transition:
+    border-color t.$transition,
+    box-shadow t.$transition;
+
+  &::placeholder {
+    color: t.color(muted);
+    opacity: 1;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: t.color(border-strong);
+  }
+
+  &:focus {
+    @include t.focus-ring;
+    border-color: t.color(primary);
+  }
+
+  &:disabled {
+    color: t.color(disabled);
+    background: t.color(neutral);
+    cursor: not-allowed;
+  }
+
+  &.is-invalid {
+    background: t.color(error-soft);
+    border-color: t.color(error);
+
+    &:focus {
+      box-shadow: 0 0 0 4px rgb(229 41 79 / 0.15);
+    }
+  }
+}
+
+textarea.control {
+  min-height: 96px;
+  resize: vertical;
+}
+
+.select {
+  appearance: none;
+  padding-inline-end: 44px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23101C35' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 6l4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 16px;
+
+  &.is-placeholder {
+    color: t.color(muted);
+  }
+
+  &:dir(rtl) {
+    background-position: left 16px center;
+  }
+
+  option {
+    color: t.color(ink);
+  }
+}
+
+.message {
+  margin: 0;
+  font-size: 0.8125rem;
+}
+
+.error {
+  color: t.color(error);
+}
+
+.hint {
+  color: t.color(muted);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

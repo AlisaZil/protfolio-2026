@@ -1,0 +1,90 @@
+@let c = config();
+
+<label class="label" [for]="id()" [class.visually-hidden]="c.hideLabel">
+  {{ c.label }}
+  @if (c.required) {
+    <span class="required" aria-hidden="true">*</span>
+  }
+</label>
+
+@switch (kind()) {
+  @case ('textarea') {
+    <textarea
+      #control
+      class="control"
+      [class.is-invalid]="hasError()"
+      [id]="id()"
+      [value]="value()"
+      [rows]="c.rows ?? 4"
+      [placeholder]="c.placeholder ?? ''"
+      [disabled]="isDisabled()"
+      [readOnly]="!!c.readonly"
+      [required]="!!c.required"
+      [attr.maxlength]="c.maxLength ?? null"
+      [attr.autocomplete]="c.autocomplete ?? null"
+      [attr.aria-invalid]="hasError()"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (focus)="focused.emit($event)"
+      (blur)="onBlur($event)"
+    ></textarea>
+  }
+  @case ('select') {
+    <select
+      #control
+      class="control select"
+      [class.is-invalid]="hasError()"
+      [class.is-placeholder]="!value()"
+      [id]="id()"
+      [disabled]="isDisabled()"
+      [required]="!!c.required"
+      [attr.aria-invalid]="hasError()"
+      [attr.aria-describedby]="describedBy()"
+      (change)="onInput($event)"
+      (keydown.enter)="onEnter($event)"
+      (focus)="focused.emit($event)"
+      (blur)="onBlur($event)"
+    >
+      @if (c.placeholder) {
+        <option value="" disabled [selected]="!value()">{{ c.placeholder }}</option>
+      }
+      @for (option of c.options ?? []; track option.value) {
+        <option
+          [value]="option.value"
+          [disabled]="!!option.disabled"
+          [selected]="option.value === value()"
+        >
+          {{ option.label }}
+        </option>
+      }
+    </select>
+  }
+  @default {
+    <input
+      #control
+      class="control"
+      [class.is-invalid]="hasError()"
+      [type]="kind()"
+      [id]="id()"
+      [value]="value()"
+      [placeholder]="c.placeholder ?? ''"
+      [disabled]="isDisabled()"
+      [readOnly]="!!c.readonly"
+      [required]="!!c.required"
+      [attr.maxlength]="c.maxLength ?? null"
+      [attr.autocomplete]="c.autocomplete ?? null"
+      [attr.aria-invalid]="hasError()"
+      [attr.aria-describedby]="describedBy()"
+      (input)="onInput($event)"
+      (keydown.enter)="onEnter($event)"
+      (focus)="focused.emit($event)"
+      (blur)="onBlur($event)"
+    />
+  }
+}
+
+@if (c.error) {
+  <p class="message error" [id]="messageId()" role="alert">{{ c.error }}</p>
+} @else if (c.hint) {
+  <p class="message hint" [id]="messageId()">{{ c.hint }}</p>
+}

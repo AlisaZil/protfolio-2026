@@ -1,0 +1,53 @@
+@use '../../styles/tokens' as t;
+
+:host {
+  display: block;
+}
+
+.tablist {
+  display: flex;
+  gap: t.space(3);
+}
+
+.tab {
+  padding: t.space(1) 6px;
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: t.color(ink);
+  background: none;
+  border: 0;
+  border-bottom: 2px solid t.color(border);
+  cursor: pointer;
+  transition:
+    color t.$transition,
+    border-color t.$transition;
+
+  &:hover:not(:disabled) {
+    color: t.color(primary);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+    border-radius: 4px 4px 0 0;
+  }
+
+  &.is-active {
+    color: t.color(primary);
+    border-bottom-color: t.color(primary);
+  }
+
+  &:disabled {
+    color: t.color(disabled);
+    cursor: not-allowed;
+  }
+}
+
+.panel {
+  padding-top: t.space(2);
+
+  &:focus-visible {
+    @include t.focus-ring;
+    border-radius: t.radius(sm);
+  }
+}

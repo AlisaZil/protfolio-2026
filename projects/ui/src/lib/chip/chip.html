@@ -1,0 +1,39 @@
+@let c = cfg();
+
+<ng-template #content>
+  @if (logoMarkup(); as markup) {
+    <span class="logo logo--svg" aria-hidden="true" [innerHTML]="markup"></span>
+  } @else if (c.logo) {
+    <svg class="logo" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path [attr.d]="c.logo" fill="currentColor" />
+    </svg>
+  }
+  {{ c.label }}
+</ng-template>
+
+@if (isButton()) {
+  <button
+    type="button"
+    class="label"
+    [disabled]="c.disabled"
+    [attr.aria-pressed]="c.kind === 'filter' ? isSelected() : null"
+    (click)="onClick($event)"
+    (focus)="focused.emit($event)"
+    (blur)="blurred.emit($event)"
+  >
+    <ng-container [ngTemplateOutlet]="content" />
+  </button>
+} @else {
+  <span class="label"><ng-container [ngTemplateOutlet]="content" /></span>
+}
+
+@if (c.removable && !c.disabled) {
+  <button
+    type="button"
+    class="remove"
+    [attr.aria-label]="'Remove ' + c.label"
+    (click)="removed.emit(config())"
+  >
+    <ui-icon [config]="{ name: 'close', size: 12 }" />
+  </button>
+}

@@ -1,0 +1,125 @@
+{
+  "titles": {
+    "home": { "en": "Alisa Zilberman — Frontend Developer", "he": "אליסה זילברמן — מפתחת Frontend" },
+    "work": { "en": "Work — Alisa Zilberman", "he": "עבודות — אליסה זילברמן" },
+    "contact": { "en": "Contact — Alisa Zilberman", "he": "צור קשר — אליסה זילברמן" },
+    "about": { "en": "About Me — Alisa Zilberman", "he": "מי אני ? — אליסה זילברמן" }
+  },
+  "nav": {
+    "brand": { "en": "Alisa Zilberman", "he": "אליסה זילברמן" },
+    "label": { "en": "Main", "he": "ראשי" },
+    "skip": { "en": "Skip to content", "he": "דילוג לתוכן" },
+    "home": { "en": "Home", "he": "בית" },
+    "work": { "en": "Work", "he": "עבודות" },
+    "about": { "en": "About Me", "he": "מי אני ?" },
+    "contact": { "en": "Contact", "he": "צור קשר" }
+  },
+  "header": {
+    "resume": { "en": "Download résumé", "he": "הורדת קורות חיים" },
+    "language": { "en": "Language", "he": "שפה" }
+  },
+  "linkedin": {
+    "title": { "en": "Yes. I have LinkedIn.", "he": "" },
+    "message": { "en": "I made the profile. That was enough networking.\nFor actual work, message me directly.", "he": "" },
+    "contact": { "en": "Talk work", "he": "" },
+    "open": { "en": "LinkedIn, then", "he": "" }
+  },
+  "home": {
+    "eyebrow": { "en": "Frontend developer", "he": "מפתחת Frontend" },
+    "headline": { "en": "I build things.", "he": "אני בונה דברים." },
+    "headlineAccent": { "en": "I figure things out.", "he": "ואז מפענחת אותם." },
+    "kittenAlt": { "en": "Gosha, a black and white kitten, lying with his paws tucked in", "he": "גושה, גור חתולים שחור-לבן, שוכב עם הכפות מקופלות" },
+    "lead": { "en": "I’m Alisa. I build Angular applications, untangle tricky code, and care about the little details.", "he": "היי אני אליסה. אני מפתחת אפליקציות Angular, פותרת קוד מורכב, ושמה לב גם לפרטים הקטנים." },
+    "explore": { "en": "See what I build", "he": "לעבודות שלי" },
+    "contact": { "en": "Let’s talk", "he": "בואו נדבר" },
+    "stack": { "en": "Tech stack", "he": "טכנולוגיות" }
+  },
+  "work": {
+    "title": { "en": "Work", "he": "עבודות" },
+    "lead": { "en": "A mix of things I’ve built, challenges I’ve taken on, and ideas I’ve brought to life.", "he": "קצת מכל מה שעשיתי, פרויקטים שבניתי ורעיונות שהפכתי למציאות." },
+    "filters": { "en": "Filter projects by type", "he": "סינון פרויקטים לפי סוג" },
+    "categories": {
+      "all": { "en": "All", "he": "הכל" },
+      "enterprise": { "en": "Enterprise", "he": "ארגוני" },
+      "web-app": { "en": "Web App", "he": "אפליקציית ווב" },
+      "landing-page": { "en": "Landing Page", "he": "דף נחיתה" }
+    },
+    "viewProject": { "en": "View project", "he": "לצפייה בפרויקט" },
+    "empty": { "en": "No projects in this category yet.", "he": "עדיין אין פרויקטים בקטגוריה הזו." }
+  },
+  "about": {
+    "eyebrow": { "en": "About me", "he": "מי אני ?" },
+    "title": { "en": "Hi, I’m Alisa", "he": "היי אני אליסה" },
+    "subtitle1": { "en": "I like figuring things out.", "he": "אני אוהבת להבין איך דברים עובדים." },
+    "subtitle2": { "en": "Especially when the frontend gets complicated.", "he": "במיוחד כשהפרונטאנד מסתבך." },
+    "paragraph1": { "en": "I pick things up quickly and don’t mind jumping into an unfamiliar codebase. Give me a tricky workflow or a component to build from scratch, and I’m happy.", "he": "אני לומדת מהר ואוהבת להיכנס לקוד חדש, גם אם אני לא מכירה אותו. בין אם זה תהליך מורכב שצריך להבין או קומפוננטה שצריך לבנות מאפס, אני נהנית מהאתגר." },
+    "paragraph2": { "en": "I work with Angular and TypeScript, and I know my way around HTML, CSS, and SCSS.", "he": "אני עובדת בעיקר עם Angular ו-TypeScript, ויש לי ניסיון גם עם HTML, CSS ו-SCSS." },
+    "paragraph3": { "en": "I’m direct, open about what I think, and happiest when we’re making progress.", "he": "אני ישירה, לא מפחדת להגיד מה אני חושבת, ואוהבת לעבוד עם אנשים שאפשר להתקדם איתם." },
+    "resume": { "en": "Download résumé", "he": "הורדת קורות חיים" },
+    "cat": {
+      "note": { "en": "pet me", "he": "pet me" },
+      "label": { "en": "Say hi to Grisha, my cat", "he": "" },
+      "alt": { "en": "Grisha, a black and white cat, sitting with one paw in the air", "he": "" },
+      "meow": { "en": "Meow!", "he": "" }
+    },
+    "role": {
+      "eyebrow": { "en": "Current role", "he": "" },
+      "company": { "en": "Achdut Israel", "he": "אחדות ישראל | Achdut Israel" },
+      "title": { "en": "Front-End Developer", "he": "מפתחת Front-End" },
+      "present": { "en": "Present", "he": "היום" },
+      "text": { "en": "Turning financial workflows into clear, reusable interfaces.", "he": "התמחות בפיתוח ממשקים מורכבים למערכות פיננסיות, עם דגש על שימושיות, ביצועים ותחזוקתיות." },
+      "points": {
+        "apps": { "en": "Build enterprise web apps with Angular, TypeScript, RxJS, SCSS and Angular Material.", "he": "פיתוח מערכות Web ארגוניות באמצעות Angular, TypeScript, RxJS, SCSS ו-Angular Material." },
+        "components": { "en": "Create reusable components for complex business workflows and dashboards.", "he": "פיתוח קומפוננטות לשימוש חוזר עבור תהליכים עסקיים מורכבים ומסכי ניהול." },
+        "finance": { "en": "Build financial interfaces: invoices, payments, balances and calculated totals.", "he": "פיתוח ממשקים למערכות פיננסיות, כולל חשבוניות, תשלומים, יתרות וחישובים מורכבים." },
+        "data": { "en": "Handle data-heavy screens: advanced tables, filtering, search, virtualization and live calculations.", "he": "עבודה עם כמויות גדולות של נתונים, כולל טבלאות מתקדמות, סינון, חיפוש, וירטואליזציה וחישובים בזמן אמת." },
+        "apis": { "en": "Connect to backend APIs, manage async data, and keep it all responsive on desktop and mobile.", "he": "אינטגרציה עם ממשקי API, ניהול מידע אסינכרוני ופיתוח ממשקים רספונסיביים למחשב ולמובייל." },
+        "ownership": { "en": "Own features end to end, from breaking down requirements to working with product, design and other developers.", "he": "אחריות על פיתוח פיצ'רים מקצה לקצה, משלב ניתוח הדרישות ועד למימוש, בשיתוף פעולה עם צוותי מוצר, עיצוב ופיתוח." },
+        "ai": { "en": "Use AI tools like Claude to move faster, while reviewing everything they produce.", "he": "שימוש בכלי AI, בהם Claude, לייעול תהליכי הפיתוח, תוך בקרה ובדיקת איכות התוצרים." }
+      }
+    },
+    "cta": {
+      "eyebrow": { "en": "Next step", "he": "השלב הבא" },
+      "title": { "en": "Let’s build something.", "he": "בואו נבנה משהו." },
+      "link": { "en": "Get in touch", "he": "בואו נדבר" }
+    }
+  },
+  "contact": {
+    "eyebrow": { "en": "Let’s work together", "he": "בואו נעבוד יחד" },
+    "title": { "en": "Have something in mind?", "he": "יש לכם משהו בראש?" },
+    "lead": { "en": "Have an idea, a tricky interface, or a project that needs another pair of hands? Let’s talk.", "he": "יש לכם רעיון, ממשק מאתגר או פרויקט שצריך עוד זוג ידיים? בואו נדבר." },
+    "availability": { "en": "Open to freelance projects", "he": "פתוחה לפרויקטים כפרילנסרית" },
+    "responseTime": { "en": "Usually replies in less than 24 hours", "he": "בדרך כלל עונה תוך פחות מ-24 שעות" },
+    "detailsTitle": { "en": "Or reach me directly", "he": "או פנו אליי ישירות" },
+    "socials": { "en": "Social profiles", "he": "פרופילים ברשתות" },
+    "formTitle": { "en": "Send a message", "he": "שליחת הודעה" },
+    "form": {
+      "name": { "en": "Name", "he": "שם" },
+      "namePlaceholder": { "en": "Your name", "he": "השם שלך" },
+      "email": { "en": "Email", "he": "אימייל" },
+      "emailPlaceholder": { "en": "you@example.com", "he": "you@example.com" },
+      "message": { "en": "Message", "he": "הודעה" },
+      "messagePlaceholder": { "en": "Tell me about your project…", "he": "ספרו לי על הפרויקט שלכם…" },
+      "submit": { "en": "Send message", "he": "שליחת הודעה" },
+      "thanks": { "en": "Thanks, {{name}}! Your message is on its way. I’ll get back to you soon.", "he": "תודה, {{name}}! ההודעה נשלחה ואחזור אליכם בהקדם." },
+      "thanksEmailApp": { "en": "Thanks, {{name}}! Your email app should open with your message ready to send.", "he": "תודה, {{name}}! אפליקציית המייל אמורה להיפתח עם ההודעה מוכנה לשליחה." },
+      "error": { "en": "Sorry, the message didn’t go through. Please try again, or email me at {{email}}.", "he": "מצטערת, ההודעה לא נשלחה. נסו שוב, או כתבו לי ישירות ל-{{email}}." }
+    },
+    "errors": {
+      "fallback": { "en": "Please check this field", "he": "נא לבדוק את השדה הזה" },
+      "name": {
+        "required": { "en": "Please enter your name", "he": "נא להזין שם" },
+        "maxlength": { "en": "Please keep it under 100 characters", "he": "עד 100 תווים, בבקשה" }
+      },
+      "email": {
+        "required": { "en": "Please enter your email", "he": "נא להזין אימייל" },
+        "email": { "en": "Enter a valid email", "he": "נא להזין כתובת אימייל תקינה" }
+      },
+      "message": {
+        "required": { "en": "Please tell me a little about your project", "he": "ספרו לי קצת על הפרויקט" },
+        "minlength": { "en": "A few more words, please (at least 10 characters)", "he": "עוד כמה מילים, בבקשה (לפחות 10 תווים)" },
+        "maxlength": { "en": "Please keep it under 2000 characters", "he": "עד 2000 תווים, בבקשה" }
+      }
+    }
+  }
+}

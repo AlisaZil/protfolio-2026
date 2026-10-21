@@ -1,0 +1,107 @@
+<section class="contact container" aria-labelledby="contact-title">
+  <div class="intro" [appSlideIn]="{ stagger: 0.08, onScroll: false }">
+    <p class="ui-eyebrow">{{ language.t('contact.eyebrow') }}</p>
+    <h1 id="contact-title" class="headline">{{ language.t('contact.title') }}</h1>
+    <p class="lead">{{ language.t('contact.lead') }}</p>
+    <p class="availability" [class.is-available]="profile.available">
+      {{ language.t('contact.availability') }}
+    </p>
+  </div>
+
+  <div class="details" [appSlideIn]="{ stagger: 0.08, delay: 0.15 }">
+    <p class="details-title">{{ language.t('contact.detailsTitle') }}</p>
+
+    <ul class="methods">
+      <li class="method">
+        <span class="method-icon"><ui-icon [config]="mailIcon" /></span>
+        <div>
+          <a class="method-link" [href]="'mailto:' + profile.email">{{ profile.email }}</a>
+          <p class="method-note">{{ language.t('contact.responseTime') }}</p>
+        </div>
+      </li>
+    </ul>
+
+    <ul class="socials" [attr.aria-label]="language.t('contact.socials')">
+      @for (social of socials; track social.id) {
+        <li>
+          <a
+            class="social"
+            [href]="social.href"
+            target="_blank"
+            rel="noopener noreferrer"
+            [attr.aria-label]="social.label"
+            (click)="socialClicks.clicked(social, $event)"
+          >
+            <ui-icon [config]="{ name: social.icon, size: 20 }" />
+          </a>
+        </li>
+      }
+    </ul>
+  </div>
+
+  <div class="form-card" [appSlideIn]="{ from: 'right', distance: 48, delay: 0.2, onScroll: false }">
+    <h2 class="ui-visually-hidden">{{ language.t('contact.formTitle') }}</h2>
+
+    <form class="form" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+      <ui-input
+        formControlName="name"
+        [config]="{
+          label: language.t('contact.form.name'),
+          placeholder: language.t('contact.form.namePlaceholder'),
+          autocomplete: 'name',
+          maxLength: 100,
+          error: errorFor('name'),
+        }"
+      />
+      <ui-input
+        formControlName="email"
+        [config]="{
+          label: language.t('contact.form.email'),
+          kind: 'email',
+          placeholder: language.t('contact.form.emailPlaceholder'),
+          autocomplete: 'email',
+          error: errorFor('email'),
+        }"
+      />
+      <ui-input
+        formControlName="message"
+        [config]="{
+          label: language.t('contact.form.message'),
+          kind: 'textarea',
+          placeholder: language.t('contact.form.messagePlaceholder'),
+          rows: 5,
+          maxLength: 2000,
+          error: errorFor('message'),
+        }"
+      />
+
+      <ui-button class="submit" [config]="submitButton()" />
+
+      @if (sent(); as done) {
+        <ui-alert
+          [config]="{
+            kind: 'inline',
+            tone: 'success',
+            message: language.t(
+              done.result === 'sent' ? 'contact.form.thanks' : 'contact.form.thanksEmailApp',
+              { name: done.name }
+            ),
+            dismissible: true,
+          }"
+          (dismissed)="sent.set(null)"
+        />
+      }
+      @if (sendFailed()) {
+        <ui-alert
+          [config]="{
+            kind: 'inline',
+            tone: 'error',
+            message: language.t('contact.form.error', { email: profile.email }),
+            dismissible: true,
+          }"
+          (dismissed)="sendFailed.set(false)"
+        />
+      }
+    </form>
+  </div>
+</section>

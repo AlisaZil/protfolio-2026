@@ -1,0 +1,256 @@
+@use 'tokens' as t;
+
+// Fill the space between header and footer and centre the content in it
+:host {
+  display: flex;
+  flex: 1;
+  align-items: center;
+}
+
+// Desktop: intro + details on the left, form on the right.
+// Phones: intro, then the form, then the details.
+.contact {
+  display: grid;
+  align-content: center;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+  grid-template-areas:
+    'intro form'
+    'details form';
+  align-items: start;
+  gap: t.space(5) t.space(6);
+  padding-block: t.space(5) t.space(6);
+}
+
+.intro {
+  grid-area: intro;
+}
+
+.details {
+  grid-area: details;
+}
+
+.form-card {
+  grid-area: form;
+}
+
+// Only needed on phones, where the details come after the form
+.details-title {
+  display: none;
+  margin: 0 0 t.space(2);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: t.color(ink);
+}
+
+.headline {
+  margin: t.space(2) 0 t.space(3);
+  font-size: clamp(2.25rem, 4.2vw, 3.25rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  color: t.color(ink);
+}
+
+.lead {
+  max-width: 30rem;
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.6;
+  color: color-mix(in srgb, t.color(ink) 82%, white);
+}
+
+// "● Open to freelance projects"
+.availability {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: t.space(3) 0 0;
+  font-size: 1rem;
+  color: t.color(muted);
+
+  &::before {
+    content: '';
+    flex: none;
+    width: 10px;
+    height: 10px;
+    background: t.color(disabled);
+    border-radius: 50%;
+  }
+
+  &.is-available::before {
+    background: t.color(success);
+    box-shadow: 0 0 0 4px rgb(34 165 91 / 0.15);
+  }
+}
+
+// Email
+.methods {
+  display: grid;
+  gap: t.space(3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.method {
+  display: flex;
+  align-items: flex-start;
+  gap: t.space(2);
+}
+
+.method-icon {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: #fff;
+  background: t.color(primary);
+  border-radius: 50%;
+  box-shadow: 0 6px 16px rgb(255 22 138 / 0.25);
+}
+
+.method-link {
+  font-size: 1.0625rem;
+  font-weight: 500;
+  color: t.color(ink);
+  text-decoration: none;
+  border-radius: 4px;
+
+  &:hover {
+    color: t.color(primary);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+}
+
+.method-note {
+  margin: 2px 0 0;
+  font-size: 0.9375rem;
+  color: t.color(muted);
+}
+
+// Social icons
+.socials {
+  display: flex;
+  gap: 12px;
+  margin: t.space(4) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.social {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: t.color(primary);
+  background: t.color(blush);
+  border-radius: t.radius(md);
+  transition:
+    background-color t.$transition,
+    color t.$transition,
+    transform t.$transition;
+
+  &:hover {
+    color: #fff;
+    background: t.color(primary);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    @include t.focus-ring;
+  }
+}
+
+// Form card
+.form-card {
+  padding: t.space(4);
+  background: t.color(surface);
+  border-radius: t.radius(lg);
+  box-shadow:
+    0 24px 60px rgb(255 22 138 / 0.1),
+    0 2px 6px rgb(16 28 53 / 0.04);
+}
+
+.form {
+  display: grid;
+  gap: 20px;
+}
+
+.submit {
+  justify-self: start;
+  margin-top: t.space(1);
+}
+
+@media (max-width: 960px) {
+  .contact {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'intro'
+      'form'
+      'details';
+    gap: t.space(4);
+    padding-block: t.space(3) t.space(5);
+  }
+
+  .details-title {
+    display: block;
+  }
+
+  // Stacked layout is taller than most screens: start at the top instead of centring
+  :host {
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 600px) {
+  .headline {
+    margin: 12px 0 t.space(2);
+  }
+
+  .lead {
+    font-size: 1rem;
+  }
+
+  .form-card {
+    padding: t.space(3) 20px;
+  }
+
+  .form {
+    gap: t.space(2);
+  }
+
+  .methods {
+    gap: t.space(2);
+  }
+
+  .method {
+    gap: 14px;
+  }
+
+  .method-icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .method-link {
+    font-size: 1rem;
+  }
+
+  .method-note {
+    font-size: 0.875rem;
+  }
+
+  .socials {
+    gap: 10px;
+    margin-top: t.space(3);
+  }
+
+  .social {
+    width: 40px;
+    height: 40px;
+  }
+}

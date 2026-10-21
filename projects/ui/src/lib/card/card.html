@@ -1,0 +1,39 @@
+@if (project(); as p) {
+  <div class="media">
+    @if (p.image) {
+      <img [src]="p.image.src" [alt]="p.image.alt" loading="lazy" />
+    }
+  </div>
+  <h3 class="title">{{ p.title }}</h3>
+  @if (p.description) {
+    <p class="text">{{ p.description }}</p>
+  }
+  @if (p.tags?.length) {
+    <div class="chips">
+      @for (tag of p.tags; track tag.id) {
+        <ui-chip [config]="tag" (clicked)="onTag(tag, $event)" />
+      }
+    </div>
+  }
+  @if (p.link) {
+    <ui-link class="link" [config]="p.link" (clicked)="onLink($event)" />
+  }
+}
+
+@if (experience(); as e) {
+  <div class="experience">
+    <p class="period">{{ e.period.start }} – {{ e.period.end ?? 'Present' }}</p>
+    <h3 class="company">{{ e.company }}</h3>
+    <p class="role">{{ e.role }}</p>
+    <p class="text">{{ e.description }}</p>
+  </div>
+}
+
+@if (skill(); as s) {
+  <h3 class="skill-title">{{ s.title }}</h3>
+  <div class="chips">
+    @for (chip of s.skills; track chip.id) {
+      <ui-chip [config]="chip" (clicked)="onTag(chip, $event)" />
+    }
+  </div>
+}
