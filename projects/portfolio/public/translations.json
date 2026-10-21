@@ -19,10 +19,10 @@
     "language": { "en": "Language", "he": "שפה" }
   },
   "linkedin": {
-    "title": { "en": "Yes. I have LinkedIn.", "he": "" },
-    "message": { "en": "I made the profile. That was enough networking.\nFor actual work, message me directly.", "he": "" },
-    "contact": { "en": "Talk work", "he": "" },
-    "open": { "en": "LinkedIn, then", "he": "" }
+    "title": { "en": "Yes. I have LinkedIn.", "he": "כן. יש לי לינקדאין." },
+    "message": { "en": "I made the profile. That was enough networking.\nFor actual work, message me directly.", "he": "פתחתי פרופיל. זה היה מספיק נטוורקינג.\nלעבודה אמיתית, שלחו לי הודעה ישירות." },
+    "contact": { "en": "Talk work", "he": "בואו נדבר עבודה" },
+    "open": { "en": "LinkedIn, then", "he": "טוב, ללינקדאין" }
   },
   "home": {
     "eyebrow": { "en": "Frontend developer", "he": "מפתחת Frontend" },
