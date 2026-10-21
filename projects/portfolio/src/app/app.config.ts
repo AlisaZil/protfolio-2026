@@ -16,6 +16,8 @@ import {
   TranslatedPageTitle,
 } from './language/language.service';
 import { TranslationsLoader } from './language/translations-loader';
+import { preloadAssets } from './shared/preload';
+import { setSplashProgress } from './shared/splash';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -32,8 +34,11 @@ export const appConfig: ApplicationConfig = {
       },
       loader: TranslationsLoader,
     }),
-    // Load the visitor's language before the first render, so text never flashes.
-    provideAppInitializer(() => inject(LanguageService).init()),
+    // Before the first render: load the language (so text never flashes) and every photo,
+    // flag and sound (so they're ready instantly), while the loading screen shows progress.
+    provideAppInitializer(() =>
+      Promise.all([inject(LanguageService).init(), preloadAssets(setSplashProgress)]),
+    ),
     { provide: TitleStrategy, useClass: TranslatedPageTitle },
   ],
 };

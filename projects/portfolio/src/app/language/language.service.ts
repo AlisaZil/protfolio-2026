@@ -76,12 +76,10 @@ export class LanguageService {
     return LANGUAGES.find((l) => l.code === code);
   }
 
-  /** Saved choice → browser language → default. */
+  /** The visitor's saved choice, otherwise English. */
   private initialLanguage(): string {
     const saved = this.read();
-    if (saved && this.find(saved)) return saved;
-    const browser = this.document.defaultView?.navigator.language?.slice(0, 2);
-    return browser && this.find(browser) ? browser : DEFAULT_LANGUAGE;
+    return saved && this.find(saved) ? saved : DEFAULT_LANGUAGE;
   }
 
   private read(): string | null {

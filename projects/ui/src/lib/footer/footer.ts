@@ -21,6 +21,7 @@ export interface FooterConfig {
   status?: { label: string; available: boolean };
   socials?: FooterSocialLink[];
   variant?: 'boxed' | 'plain';
+  hideLinksOnMobile?: boolean;
 }
 
 @Component({

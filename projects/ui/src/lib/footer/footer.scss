@@ -84,6 +84,11 @@
     padding-inline-start: 0;
     border-inline-start: 0;
   }
+
+  // Page links are already in the navbar's menu on phones
+  .hide-on-mobile {
+    display: none;
+  }
 }
 
 .status {

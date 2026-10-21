@@ -66,6 +66,7 @@ export class App {
 
   protected readonly footer = computed<FooterConfig>(() => ({
     variant: 'plain',
+    hideLinksOnMobile: true,
     // The \u2066 and \u2069 marks keep this left-to-right on Hebrew pages (otherwise the year jumps to the end)
     copyright: `\u2066© ${new Date().getFullYear()} ${this.language.t('nav.brand')}\u2069`,
     links: this.pages(),

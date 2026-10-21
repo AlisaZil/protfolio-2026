@@ -4,7 +4,7 @@
   <p class="copyright">{{ c.copyright }}</p>
 
   @if (c.links?.length) {
-    <nav aria-label="Footer">
+    <nav aria-label="Footer" [class.hide-on-mobile]="c.hideLinksOnMobile">
       <ul class="links">
         @for (item of c.links; track item.id) {
           <li>

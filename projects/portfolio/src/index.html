@@ -20,6 +20,99 @@
     />
   </head>
   <body>
+    <!-- Loading screen: shows until photos, sounds and fonts are ready (see app/shared/splash.ts) -->
+    <div id="splash" role="status" aria-label="Loading">
+      <p class="splash-name">
+        <span class="splash-text">Waking up the cats…</span>
+        <span class="splash-cat" aria-hidden="true">🐈</span>
+      </p>
+      <div class="splash-track"><div class="splash-bar"></div></div>
+    </div>
+    <style>
+      #splash {
+        --progress: 0;
+        position: fixed;
+        inset: 0;
+        z-index: 1000;
+        display: grid;
+        place-content: center;
+        gap: 20px;
+        justify-items: center;
+        background: #fffcfa;
+        font-family: 'Inter', 'Heebo', system-ui, sans-serif; /* same fonts as the site */
+        transition: opacity 500ms ease, visibility 500ms;
+      }
+      #splash.is-done {
+        opacity: 0;
+        visibility: hidden;
+      }
+      .splash-name {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0;
+        font-size: 1.5rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        color: #101c35;
+      }
+      .splash-text {
+        animation: splash-breathe 1.6s ease-in-out infinite;
+      }
+      .splash-cat {
+        display: inline-block;
+        font-size: 1.75rem;
+        animation: splash-walk 0.6s ease-in-out infinite alternate;
+      }
+      @keyframes splash-walk {
+        from {
+          transform: translateY(0) rotate(-6deg);
+        }
+        to {
+          transform: translateY(-5px) rotate(6deg);
+        }
+      }
+      .splash-track {
+        width: 180px;
+        height: 4px;
+        overflow: hidden;
+        background: #fce8f2;
+        border-radius: 999px;
+      }
+      .splash-bar {
+        height: 100%;
+        width: calc(var(--progress) * 100%);
+        background: #ff168a;
+        border-radius: inherit;
+        transition: width 250ms ease;
+      }
+      @keyframes splash-breathe {
+        50% {
+          opacity: 0.55;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #splash,
+        .splash-bar {
+          transition: none;
+        }
+        .splash-text,
+        .splash-cat {
+          animation: none;
+        }
+      }
+    </style>
+
+    <script>
+      // Show the loading text in Hebrew for visitors who chose Hebrew before
+      try {
+        if (localStorage.getItem('language') === 'he') {
+          document.documentElement.dir = 'rtl';
+          document.querySelector('.splash-text').textContent = 'אוספת את החתולים…';
+        }
+      } catch {}
+    </script>
+
     <app-root></app-root>
   </body>
 </html>

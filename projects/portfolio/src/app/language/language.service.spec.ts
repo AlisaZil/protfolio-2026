@@ -25,6 +25,25 @@ describe('LanguageService', () => {
     localStorage.removeItem('language');
   });
 
+  it('starts in English on a first visit, even when the browser is set to Hebrew', async () => {
+    vi.spyOn(navigator, 'language', 'get').mockReturnValue('he-IL');
+    TestBed.configureTestingModule({
+      providers: [
+        importProvidersFrom(
+          TranslocoTestingModule.forRoot({
+            langs: { en: pickLanguage(file, 'en'), he: pickLanguage(file, 'he') },
+            translocoConfig: { availableLangs: ['en', 'he'], defaultLang: 'en' },
+            preloadLangs: true,
+          }),
+        ),
+      ],
+    });
+    const language = TestBed.inject(LanguageService);
+    await language.init();
+    expect(language.lang()).toBe('en');
+    vi.restoreAllMocks();
+  });
+
   it('shows English for Hebrew texts that are left empty', async () => {
     TestBed.configureTestingModule({
       providers: [
